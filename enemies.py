@@ -10,12 +10,12 @@ class Enermies:
         return "Enemy"
 
     def __str__(self):
-        return self.getName() + " -> " + " Stats: " + str(self.health) + "HP and " + str(self.damage) + "DM"
+        return self.getName() + " -> " + " Stats: " + str(self.health) + "HP and " + str(self.dmg) + "DM"
 
-    def dealDamage(self, character, dmg):
+    def deal_damage(self, character, dmg):
         character.takeDamage(dmg)
 
-    def takeDamage(self, dmg):
+    def take_damage(self, dmg):
         self.health -= dmg
 
     def attack(self, target):
@@ -23,12 +23,12 @@ class Enermies:
         dmg = skill + self.dmg
         self.dealDamage(target, dmg)
 
-    def getHealth(self):
+    def get_health(self):
         return self.health
 
     def die(self):
         self.alive = False
 
-    def getAlive(self):
+    def get_alive(self):
         return self.alive
 
