@@ -18,17 +18,20 @@ class Enemies:
     def get_alive(self):
         return self.alive
 
+    def set_die(self):
+        self.alive = False
+
     def __str__(self):
-        return self.get_name() + ": " + " Stats: " + str(self.health) + "HP and " + str(self.dmg) + "DMG"
+        return self.get_name() + ": " + " Stats: " + str(self.health) + "HP and " + str(self.dmg) + "DMG\n"
 
     def deal_damage(self, character, dmg):
         character.take_damage(dmg)
 
     def take_damage(self, dmg):
-        if self.get_health() > 0:
+        if (self.get_health() - dmg) > 0:
             self.health -= dmg
         else:
-            self.die()
+            self.set_die()
 
     def damage_roll(self):
         return randint(1, self.dmg)
@@ -36,8 +39,7 @@ class Enemies:
     def attack(self, target):
         self.deal_damage(target, self.damage_roll())
 
-    def die(self):
-        self.alive = False
+
 
 
 class PartialExam(Enemies):
