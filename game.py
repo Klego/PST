@@ -1,15 +1,13 @@
 from characters import *
 from enemies import *
+class Game:
 
 
 
 
-
-def resurrect(num_players):
-
-    character = search_player(num_players)
-    if character.get_alive() == True:
-        return False
-    else:
-        character.set_alive()
-        character.set_max_health()
+    def resurrect(character):
+        if character.get_alive() == True:
+            return 0
+        else:
+            character.set_alive()
+            character.set_max_health()
