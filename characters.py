@@ -64,6 +64,9 @@ class Character:
     def set_cooldown(self):
         self.skill[2] = self.skill[3]
 
+    def get_cooldown(self):
+        return self.skill[2]
+
     def update_cooldown(self):
         if self.skill[2] > 0:
             self.skill[2] -= 1
@@ -99,7 +102,7 @@ class Procrastinator(Character):
         self.passive_skill = [1, 'Adds +1 DMG each round. Resets at the beginning of each level.']
         # Skill Id, Explanation, Cooldown count, Cooldown, Uses
         self.skill = ['AOE', 'DMG + DMG roll + stage level to all the enemies \n\t after the third round /'
-                                         + ' of each stage and once per stage.', 3, 3, 1]
+                             'of each stage and once per stage.', 3, 3, 1]
 
     def reset_skill_uses(self):
         self.skill[4] = 1
