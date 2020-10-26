@@ -40,8 +40,6 @@ class Enemies:
         self.deal_damage(target, self.damage_roll())
 
 
-
-
 class PartialExam(Enemies):
     def __init__(self):
         super().__init__(health=20, dmg=6)
