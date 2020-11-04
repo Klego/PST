@@ -29,7 +29,7 @@ def game_init_menu(num_players):
 def game_init():
     num_players, num_stages = arguments_parser()
     characters_playing = game_init_menu(num_players)
-
+    num_turns = 0
 
 def resurrect(character):
     if character.get_alive():
