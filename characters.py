@@ -1,5 +1,4 @@
 from random import randint
-from game import *
 
 
 class Character:
@@ -68,9 +67,16 @@ class Character:
         return self.skill[2]
 
     def update_cooldown(self):
-        if self.skill[2] > 0:
+        if self.get_cooldown() > 0:
             self.skill[2] -= 1
 
+    def heal_after_turn(self):
+        heal_after_turn = self.health + (1/4) * self.max_health
+        if self.health < self.max_health:
+            if heal_after_turn <= self.max_health:
+                self.health = heal_after_turn
+            else:
+                self.health = self.max_health
 
 class Bookworm(Character):
     def __init__(self):
