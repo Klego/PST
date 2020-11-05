@@ -58,10 +58,10 @@ class FinalExam(Enemies):
 
 
 class TheoreticalClass(Enemies):
-    def __init__(self, floor):
+    def __init__(self, level):
         super().__init__(health=8, dmg=4)
-        self.floor = floor
-        self.skill = ['Lucky DMG', floor, 'Add to the damage the floor on which it appears']
+        self.level = level
+        self.skill = ['Lucky DMG', level, 'Add to the damage the floor on which it appears']
 
     def attack(self, target):
         dmg = self.skill[1] + self.damage_roll()
