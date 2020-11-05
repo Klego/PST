@@ -73,10 +73,10 @@ class Character:
         if self.get_cooldown() > 0:
             self.skill[2] -= 1
 
-    def heal_after_turn(self):
-        health_after_turn = self.health + (1/4) * self.max_health
+    def heal_after_level(self):
+        health_after_level = self.health + (1/4) * self.max_health
         if self.health < self.max_health:
-            if health_after_turn <= self.max_health:
+            if health_after_level <= self.max_health:
                 self.health += (1/4) * self.max_health
             else:
                 self.health = self.max_health

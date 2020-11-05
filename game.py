@@ -57,12 +57,13 @@ def aoe_dmg_skill(enemies, character, level):
         for target in enemies:
             character.deal_damage(target, (character.damage_roll() + character.get_dmg() + level))
         character.skill_uses_depleted()
+        character.set_cooldown()
     else:
         return 0
 
-
+#
 def heal_skill(character_target, character):
-    heal_after = character_target.get_health() + 2 * character_target.get_dmg()
+    heal_after = character_target.get_health() + 2 * character.get_dmg()
     if character_target.get_health() < character_target.get_max_health():
         if heal_after <= character_target.get_max_health():
             character_target.set_health(heal_after)
