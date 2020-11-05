@@ -31,9 +31,41 @@ def game_init():
     characters_playing = game_init_menu(num_players)
     num_turns = 0
 
-def resurrect(character):
-    if character.get_alive():
+
+def resurrect_skill(character_target, character):
+    if character_target.get_alive() or character.get_cooldown() != 0:
         return 0
     else:
-        character.set_alive()
-        character.set_max_health()
+        character_target.set_alive()
+        character_target.set_max_health()
+        character.set_cooldown()
+
+
+def amp_dmg_skill(target, character):
+    if character.get_cooldown() == 0:
+        character.deal_damage(target, (character.damage_roll() + character.get_dmg()) * 1.5)
+        character.set_cooldown()
+    else:
+        return 0
+
+
+def aoe_dmg_skill(enemies, character, level):
+    if character.get_skill_uses() == 1 and character.get_cooldown() == 0:
+        for target in enemies:
+            character.deal_damage(target, (character.damage_roll() + character.get_dmg() + level))
+        character.skill_uses_depleted()
+    else:
+        return 0
+
+
+def heal_skill(character_target, character):
+    heal_after = character_target.get_health() + 2 * character_target.get_dmg()
+    if character_target.get_health() < character_target.get_max_health():
+        if heal_after <= character_target.get_max_health():
+            character_target.set_health(heal_after)
+        else:
+            character_target.set_max_health()
+
+        character.set_cooldown()
+    else:
+        return 0
