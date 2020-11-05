@@ -95,10 +95,12 @@ def all_characters_dead(characters_playing):
 
 
 def who_alive(characters_playing):
-    alive = 0
+    alive = []
     for a in characters_playing:
         if a.get_alive:
-            alive += 1
+            alive.append(True)
+        else:
+            alive.append(False)
     return alive
 
 
