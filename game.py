@@ -77,17 +77,35 @@ def heal_skill(character_target, character):
 def all_characters_alive(characters_playing):
     alive = 0
     for c in characters_playing:
-        if c.get_health() == c.get_max_health():
+        if c.get_alive():
             alive += 1
     if alive == len(characters_playing):
         print("All players are alive, so the skill won't be used.")
-        return 1
+        return True
+
+
+def all_characters_dead(characters_playing):
+    dead = 0
+    for c in characters_playing:
+        if not c.get_alive:
+            dead += 1
+    if dead == len(characters_playing):
+        print("All characters have been defeated. Try Again.")
+        return True
+
+
+def who_alive(characters_playing):
+    alive = 0
+    for a in characters_playing:
+        if a.get_alive:
+            alive += 1
+    return alive
 
 
 def use_skill(character, enemies, level, characters_playing, character_target):
 
     if character.__class__.__name__ == "Bookworm":
-        if all_characters_alive(characters_playing) != 1:
+        if not all_characters_alive(characters_playing):
             if resurrect_skill(character_target, character) == 0:
                 print("The player you choose is already alive. The skill won't be used")
             elif resurrect_skill(character_target, character) == 1:
