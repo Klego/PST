@@ -79,7 +79,7 @@ class Teacher(Enemies):
     def attack(self, target):
         roll = self.damage_roll()
         if roll == 7:
-            dmg = self.skill[1] + self.damage_roll()
+            dmg = self.skill[1] + roll
         else:
             dmg = self.damage_roll()
 
