@@ -1,6 +1,7 @@
 from characters import Bookworm, Worker, Procrastinator, Whatsapper
 from enemies import PartialExam, FinalExam, TheoreticalClass, Teacher
 from utils import sanitize_inputs, clear_screen, arguments_parser
+from random import randint
 
 
 def game_init_menu(num_players):
@@ -33,8 +34,10 @@ def game_init():
 
 
 def resurrect_skill(character_target, character):
-    if character_target.get_alive() or character.get_cooldown() != 0:
+    if character_target.get_alive():
         return 0
+    elif character.get_cooldown() != 0:
+        return 1
     else:
         character_target.set_alive()
         character_target.set_max_health()
@@ -69,3 +72,37 @@ def heal_skill(character_target, character):
         character.set_cooldown()
     else:
         return 0
+
+
+def all_characters_alive(characters_playing):
+    alive = 0
+    for c in characters_playing:
+        if c.get_health() == c.get_max_health():
+            alive += 1
+    if alive == len(characters_playing):
+        print("All players are alive, so the skill won't be used.")
+        return 1
+
+
+def use_skill(character, enemies, level, characters_playing, character_target):
+
+    if character.__class__.__name__ == "Bookworm":
+        if all_characters_alive(characters_playing) != 1:
+            if resurrect_skill(character_target, character) == 0:
+                print("The player you choose is already alive. The skill won't be used")
+            elif resurrect_skill(character_target, character) == 1:
+                print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds")
+
+    elif character.__class__.__name__ == "Worker":
+        if amp_dmg_skill(enemies[randint(0, len(enemies)-1)], character) == 0:
+            print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds")
+
+    elif character.__class__.__name__ == "Procastinator":
+        if aoe_dmg_skill(enemies, character, level) == 0:
+            print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds" + "with " +
+                  str(character.get_skill_uses()) + " available uses.")
+
+    elif character.__class__.__name__ == "Whatsapper":
+        if heal_skill(character_target, character) == 0:
+            print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds")
+
