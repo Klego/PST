@@ -18,6 +18,9 @@ class Character:
     def get_health(self):
         return self.health
 
+    def set_health(self, health):
+        self.health = health
+
     def get_max_health(self):
         return self.max_health
 
@@ -71,12 +74,13 @@ class Character:
             self.skill[2] -= 1
 
     def heal_after_turn(self):
-        heal_after_turn = self.health + (1/4) * self.max_health
+        health_after_turn = self.health + (1/4) * self.max_health
         if self.health < self.max_health:
-            if heal_after_turn <= self.max_health:
-                self.health = heal_after_turn
+            if health_after_turn <= self.max_health:
+                self.health += (1/4) * self.max_health
             else:
                 self.health = self.max_health
+
 
 class Bookworm(Character):
     def __init__(self):
@@ -109,6 +113,12 @@ class Procrastinator(Character):
         # Skill Id, Explanation, Cooldown count, Cooldown, Uses
         self.skill = ['AOE', 'DMG + DMG roll + stage level to all the enemies \n\t after the third round /'
                              'of each stage and once per stage.', 3, 3, 1]
+
+    def get_skill_uses(self):
+        return self.skill[4]
+
+    def skill_uses_depleted(self):
+        self.skill[4] = 0
 
     def reset_skill_uses(self):
         self.skill[4] = 1
