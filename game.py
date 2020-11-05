@@ -103,7 +103,7 @@ def who_alive(characters_playing):
             alive.append(False)
     return alive
 
-
+#use this function when character uses a skill
 def use_skill(character, enemies, level, characters_playing, character_target):
 
     if character.__class__.__name__ == "Bookworm":
