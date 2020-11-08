@@ -30,7 +30,7 @@ def game_init_menu(num_players):
 def game_init():
     num_players, num_stages = arguments_parser()
     characters_playing = game_init_menu(num_players)
-    num_turns = 0
+    return characters_playing, num_stages
 
 
 def resurrect_skill(character_target, character):
@@ -61,7 +61,7 @@ def aoe_dmg_skill(enemies, character, level):
     else:
         return 0
 
-#
+
 def heal_skill(character_target, character):
     heal_after = character_target.get_health() + 2 * character.get_dmg()
     if character_target.get_health() < character_target.get_max_health():
@@ -104,26 +104,45 @@ def who_alive(characters_playing):
             alive.append(False)
     return alive
 
+
 #use this function when character uses a skill
-def use_skill(character, enemies, level, characters_playing, character_target):
+def use_skill(character, enemies, level, characters_playing, character_target=None):
 
     if character.__class__.__name__ == "Bookworm":
         if not all_characters_alive(characters_playing):
             if resurrect_skill(character_target, character) == 0:
                 print("The player you choose is already alive. The skill won't be used")
             elif resurrect_skill(character_target, character) == 1:
-                print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds")
+                print("The skill is currently in cooldown for" + str(character.get_cooldown()) + " rounds")
 
     elif character.__class__.__name__ == "Worker":
         if amp_dmg_skill(enemies[randint(0, len(enemies)-1)], character) == 0:
-            print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds")
+            print("The skill is currently in cooldown for" + str(character.get_cooldown()) + " rounds")
 
     elif character.__class__.__name__ == "Procastinator":
-        if aoe_dmg_skill(enemies, character, level) == 0:
-            print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds" + "with " +
+        if aoe_dmg_skill(enemies, character, stage) == 0:
+            print("The skill is currently in cooldown for" + str(character.get_cooldown()) + " rounds" + "with " +
                   str(character.get_skill_uses()) + " available uses.")
 
     elif character.__class__.__name__ == "Whatsapper":
         if heal_skill(character_target, character) == 0:
-            print("The skill is curently in cooldown for" + str(character.get_cooldown()) + " rounds")
+            print("The skill is currently in cooldown for" + str(character.get_cooldown()) + " rounds")
 
+
+def enemies_stage(stage):
+    enemies_playing = []
+    index = 0
+    enemies_available = [PartialExam(), TheoreticalClass(stage), Teacher(), FinalExam()]
+    if 1 <= stage < 4:
+        random = randint(0, 2)
+    else:
+        random = randint(0, 3)
+    while index < 4:
+        enemies_playing.append(enemies_available[random])
+        index += 1
+    return enemies_playing
+
+
+def game():
+    characters_playing, stages = game_init()
+    enemies_playing = enemies_stage(stages)
