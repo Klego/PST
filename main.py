@@ -1,5 +1,9 @@
 from game import *
-from utils import arguments_parser
+
 
 def main():
-    game_init()
+    game()
+
+
+if __name__ == "__main__":
+    main()
