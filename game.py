@@ -18,7 +18,7 @@ def game_init_menu(num_players):
     while player_index <= num_players:
         option_menu = sanitize_inputs(message="Player " + str(player_index) + ". Please, choose a character(1-4): ",
                                       valid_input=[1, 2, 3, 4], valid_cast=int)
-        selected_characters.append(available_characters[option_menu-1])
+        selected_characters.append(available_characters[option_menu - 1])
     print("********************************************************\n")
     index = 1
     for character in selected_characters:
@@ -106,7 +106,6 @@ def who_alive(characters_playing):
 
 
 def use_skill(character, enemies, stage, characters_playing, character_target=None):
-
     if character.__class__.__name__ == "Bookworm":
         if not all_characters_alive(characters_playing):
             if resurrect_skill(character_target, character) == 0:
@@ -115,7 +114,7 @@ def use_skill(character, enemies, stage, characters_playing, character_target=No
                 print("The skill is currently in cooldown for" + str(character.get_cooldown()) + " rounds")
 
     elif character.__class__.__name__ == "Worker":
-        if amp_dmg_skill(enemies[randint(0, len(enemies)-1)], character) == 0:
+        if amp_dmg_skill(enemies[randint(0, len(enemies) - 1)], character) == 0:
             print("The skill is currently in cooldown for" + str(character.get_cooldown()) + " rounds")
 
     elif character.__class__.__name__ == "Procastinator":
@@ -142,6 +141,31 @@ def enemies_stage(stage):
     return enemies_playing
 
 
+def print_enemies(stage, enemies_playing):
+    print("************************")
+    print("*\tSTAGE " + str(stage) + "\t*")
+    print("************************")
+    print("----  CURRENT MONSTERS  ----")
+    print("++++++++++++++++++++++++++++++++++++++")
+    for enemy in enemies_playing:
+        print(str(enemy))
+    print("++++++++++++++++++++++++++++++++++++++")
+
+
+def playing_menu(characters_playing):
+    characters_playing
+
+
+def characters_turn(characters_playing):
+    characters_playing
+
+
+def enemies_turn(enemies_playing):
+    enemies_playing
+
+
 def game():
+    current_stage = 1
     characters_playing, stages = game_init()
-    enemies_playing = enemies_stage(stages)
+    enemies_playing = enemies_stage(current_stage)
+    print_enemies(current_stage, enemies_playing)
