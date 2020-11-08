@@ -105,8 +105,7 @@ def who_alive(characters_playing):
     return alive
 
 
-#use this function when character uses a skill
-def use_skill(character, enemies, level, characters_playing, character_target=None):
+def use_skill(character, enemies, stage, characters_playing, character_target=None):
 
     if character.__class__.__name__ == "Bookworm":
         if not all_characters_alive(characters_playing):
