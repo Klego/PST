@@ -28,14 +28,11 @@ class Enemies:
         character.take_damage(dmg)
         return dmg
 
-    def take_damage(self, dmg, store=False):
-        if not store:
-            if (self.get_health() - dmg) > 0:
-                self.health -= dmg
-            else:
-                self.set_die()
+    def take_damage(self, dmg):
+        if (self.get_health() - dmg) > 0:
+            self.health -= dmg
         else:
-            return dmg
+            self.set_die()
 
     def damage_roll(self):
         return randint(1, self.dmg)
