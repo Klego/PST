@@ -49,7 +49,9 @@ class Character:
         self.alive = False
 
     def deal_damage(self, enemy, dmg):
-        enemy.takeDamage(dmg + (self.passive_skill[0] if self.passive_skill[0] > 0 else 0))
+        real_dmg = dmg + (self.passive_skill[0] if self.passive_skill[0] > 0 else 0)
+        enemy.takeDamage(real_dmg)
+        return real_dmg
 
     def take_damage(self, dmg):
         if (self.get_health() - dmg) > 0:
@@ -61,7 +63,8 @@ class Character:
         return randint(1, self.dmg)
 
     def attack(self, target):
-        self.deal_damage(target, self.damage_roll())
+        real_damage = self.deal_damage(target, self.damage_roll())
+        return real_damage
 
     def set_cooldown(self):
         self.skill[2] = self.skill[3]
@@ -73,7 +76,10 @@ class Character:
         if self.get_cooldown() > 0:
             self.skill[2] -= 1
 
-    def heal_after_level(self):
+    def reset_cooldown(self):
+        self.skill[2] = 0
+
+    def heal_after_turn(self):
         health_after_level = self.health + (1/4) * self.max_health
         if self.health < self.max_health:
             if health_after_level <= self.max_health:
@@ -88,7 +94,7 @@ class Bookworm(Character):
         self.skill = ['Resurrect', 'Revives one player(4 rounds)', 0, 4]
 
     def get_name(self):
-        return "The bookworm"
+        return "Bookworm"
 
     def __str__(self):
         super().__str__() + '\n\t' + self.get_skill()
@@ -100,7 +106,7 @@ class Worker(Character):
         self.skill = ['Amp. DMG', '1.5 * (DMG + DMG roll) damage to one enemy (3 rounds)', 0, 3]
 
     def get_name(self):
-        return "The worker"
+        return "Worker"
 
     def __str__(self):
         super().__str__() + '\n\t' + self.get_skill()
@@ -129,8 +135,11 @@ class Procrastinator(Character):
     def update_passive_skill(self):
         self.passive_skill[0] += 1
 
+    def reset_cooldown(self):
+        self.skill[2] = 3
+
     def get_name(self):
-        return "The procrastinator"
+        return "Procrastinator"
 
     def __str__(self):
         self.get_passive_skill() + super().__str__() + '\n\t' + self.get_skill()
@@ -142,7 +151,7 @@ class Whatsapper(Character):
         self.skill = ['Heal', 'Heals 2*DMG to one player (3 rounds)', 0, 3]
 
     def get_name(self):
-        return "The whatsapper"
+        return "Whatsapper"
 
     def __str__(self):
         super().__str__() + '\n\t' + self.get_skill()

@@ -26,18 +26,23 @@ class Enemies:
 
     def deal_damage(self, character, dmg):
         character.take_damage(dmg)
+        return dmg
 
-    def take_damage(self, dmg):
-        if (self.get_health() - dmg) > 0:
-            self.health -= dmg
+    def take_damage(self, dmg, store=False):
+        if not store:
+            if (self.get_health() - dmg) > 0:
+                self.health -= dmg
+            else:
+                self.set_die()
         else:
-            self.set_die()
+            return dmg
 
     def damage_roll(self):
         return randint(1, self.dmg)
 
     def attack(self, target):
-        self.deal_damage(target, self.damage_roll())
+        real_damage = self.deal_damage(target, self.damage_roll())
+        return real_damage
 
 
 class PartialExam(Enemies):
@@ -65,10 +70,11 @@ class TheoreticalClass(Enemies):
 
     def attack(self, target):
         dmg = self.skill[1] + self.damage_roll()
-        self.deal_damage(target, dmg)
+        real_damage = self.deal_damage(target, dmg)
+        return real_damage
 
     def get_name(self):
-        return "Theorical Class"
+        return "Theoretical Class"
 
 
 class Teacher(Enemies):
@@ -83,7 +89,8 @@ class Teacher(Enemies):
         else:
             dmg = self.damage_roll()
 
-        self.deal_damage(target, dmg)
+        real_damage = self.deal_damage(target, dmg)
+        return real_damage
 
     def get_name(self):
         return "Teacher"
