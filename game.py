@@ -70,7 +70,7 @@ def heal_skill(character_target, character):
     heal_after = character_target.get_health() + 2 * character.get_dmg()
     if character.get_cooldown() == 0:
         if character_target.get_health() < character_target.get_max_health():
-            if heal_after <= character_target.get_max_health():
+            if heal_after < character_target.get_max_health():
                 character_target.set_health(heal_after)
             else:
                 character_target.set_max_health()
@@ -263,10 +263,28 @@ def characters_turn(characters_playing, enemies_playing, stage):
                     print("\n")
                     print("****************************************************\n")
                     use_skill(character, enemies_playing, stage, characters_playing, character_target)
+            player_number += 1
 
 
 def enemies_turn(enemies_playing, characters_playing):
-    enemies_playing
+    targets_alive = []
+    index_pop = 0
+    print("------------------------\n")
+    print("-\tENEMIES TURN\t-\n")
+    print("------------------------\n\n")
+    for enemy in enemies_playing:
+        if enemy.get_alive():
+            for character in characters_playing:
+                if character.get_alive():
+                    targets_alive.append(character)
+            target = targets_alive[randint(0, len(targets_alive)-1)]
+            dmg = enemy.attack(target)
+            print("The " + enemy.get_name() + " did " + str(dmg) +
+                  "to " + target.get_name() + ". " + target.get_name() + " has" + str(target.get_health()) +
+                  "hp left.")
+        else:
+            enemies_playing.pop(index_pop)
+        index_pop += 1
 
 
 def check_cooldown_heals(characters_playing):
