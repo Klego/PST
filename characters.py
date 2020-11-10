@@ -37,13 +37,13 @@ class Character:
         self.alive = True
 
     def get_skill(self):
-        return "SKill: " + self.skill[1]
+        return "Skill: " + self.skill[1]
 
     def get_passive_skill(self):
         return "Passive: " + self.passive_skill[1] + "\n"
 
     def __str__(self):
-        return self.get_name() + " -> " + "Stats: " + self.get_health() + "HP and " + self.dmg() + "DMG\n"
+        return self.get_name() + " -> " + "Stats: " + str(self.max_health) + "HP and " + str(self.dmg) + "DMG\n"
 
     def set_die(self):
         self.alive = False
