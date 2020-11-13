@@ -195,13 +195,17 @@ def use_skill(character, enemies, stage, characters_playing, character_target=No
 def enemies_stage(stage):
     enemies_playing = []
     index = 0
-    enemies_available = [PartialExam(), TheoreticalClass(stage), Teacher(), FinalExam()]
+    enemies_available = [PartialExam, TheoreticalClass, Teacher, FinalExam]
     if 1 <= stage < 4:
         random = randint(0, 2)
     else:
         random = randint(0, 3)
     while index < 4:
-        enemies_playing.append(enemies_available[random])
+        enemy = enemies_available[random]
+        if enemy.__class__.__name__ == "TheoreticalClass":
+            enemies_playing.append(enemy(stage))
+        else:
+            enemies_playing.append(enemy())
         index += 1
     return enemies_playing
 
