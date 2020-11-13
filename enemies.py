@@ -24,7 +24,8 @@ class Enemies:
     def __str__(self):
         return self.get_name() + ": " + " Stats: " + str(self.health) + "HP and " + str(self.dmg) + "DMG\n"
 
-    def deal_damage(self, character, dmg):
+    @staticmethod
+    def deal_damage(character, dmg):
         character.take_damage(dmg)
         return dmg
 

@@ -23,7 +23,8 @@ def sanitize_inputs(message="", valid_input=[], valid_cast=str, num_retries=-1):
             else:
                 raise InvalidInputError("You have inputted a wrong option.\n")
         except ValueError:
-            sys.exit(print("ValueError Exception. Quitting program...\n"))
+            print("ValueError Exception. Quitting program...\n")
+            sys.exit(0)
         except InvalidInputError:
             cont_retries += 1
             continue
@@ -46,12 +47,12 @@ def arguments_parser():
         parser.add_argument('-p', '--players', type=int, default=1)
         parser.add_argument('-s', '--stages', type=int, default=1)
         args = parser.parse_args()
-        if not 1 < args.players <= NUM_MAX_PLAYERS:
+        if not args.players <= NUM_MAX_PLAYERS:
             print("The number of players must be between 1 and 4. Finishing program")
             error = True
         else:
             num_players = args.players
-        if not 1 < args.stages <= NUM_MAX_STAGES:
+        if not args.stages <= NUM_MAX_STAGES:
             print("The number of stages must be between 1 and 10. Finishing program")
             error = True
         else:
