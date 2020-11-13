@@ -22,7 +22,7 @@ class Enemies:
         self.alive = False
 
     def __str__(self):
-        return self.get_name() + ": " + " Stats: " + str(self.health) + "HP and " + str(self.dmg) + "DMG\n"
+        return self.get_name() + ": " + " Stats: " + str(self.health) + "HP and " + str(self.dmg) + "DMG"
 
     @staticmethod
     def deal_damage(character, dmg):
