@@ -54,16 +54,18 @@ class Character:
         return real_dmg
 
     def take_damage(self, dmg):
-        if (self.get_health() - dmg) > 0:
+        if (self.get_health() - dmg) >= 0:
             self.health -= dmg
         else:
+            self.health = 0
             self.set_die()
 
     def damage_roll(self):
         return randint(1, self.dmg)
 
     def attack(self, target):
-        real_damage = self.deal_damage(target, self.damage_roll())
+        dmg = self.damage_roll()
+        real_damage = self.deal_damage(target, dmg)
         return real_damage
 
     def set_cooldown(self):

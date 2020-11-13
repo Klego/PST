@@ -3,7 +3,7 @@ from random import randint
 
 class Enemies:
     def __init__(self, health, dmg):
-        self.health = health
+        self.health = int(health)
         self.dmg = dmg
         # name, damage, explanation
         self.skill = []
@@ -14,6 +14,9 @@ class Enemies:
 
     def get_health(self):
         return self.health
+
+    def set_health(self, num):
+        self.health = num
 
     def get_alive(self):
         return self.alive
@@ -33,6 +36,7 @@ class Enemies:
         if (self.get_health() - dmg) > 0:
             self.health -= dmg
         else:
+            self.health = 0
             self.set_die()
 
     def damage_roll(self):
