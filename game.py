@@ -196,11 +196,11 @@ def enemies_stage(stage):
     enemies_playing = []
     index = 0
     enemies_available = [PartialExam, TheoreticalClass, Teacher, FinalExam]
-    if 1 <= stage < 4:
-        random = randint(0, 2)
-    else:
-        random = randint(0, 3)
     while index < 4:
+        if 1 <= stage < 4:
+            random = randint(0, 2)
+        else:
+            random = randint(0, 3)
         enemy = enemies_available[random]
         if enemy.__class__.__name__ == "TheoreticalClass":
             enemies_playing.append(enemy(stage))
