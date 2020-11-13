@@ -24,7 +24,7 @@ def game_init_menu(num_players):
 
         selected_characters.append(player())
         player_index += 1
-    print("********************************************************\n")
+
     index = 1
     for character in selected_characters:
         print(str(index) + ".- " + str(character))
@@ -212,7 +212,7 @@ def enemies_stage(stage):
 
 def print_enemies(stage, enemies_playing):
     print("************************")
-    print("*\tSTAGE " + str(stage) + "\t*")
+    print("*\tSTAGE " + str(stage) + "\t" + "*")
     print("************************")
     print("----  CURRENT MONSTERS  ----")
     print("++++++++++++++++++++++++++++++++++++++")
@@ -223,9 +223,9 @@ def print_enemies(stage, enemies_playing):
 
 def characters_turn(characters_playing, enemies_playing, stage):
     player_number = 1
-    print("------------------------\n")
+    print("------------------------")
     print("-\tPLAYERS TURN\t-\n")
-    print("------------------------\n\n")
+    print("------------------------\n")
     for character in characters_playing:
         if character.get_alive():
             message = character.get_name() + "Player " + str(player_number) + " . What are you going to do?: "
@@ -249,7 +249,6 @@ def characters_turn(characters_playing, enemies_playing, stage):
                     message = "Who do you want to revive?: "
                     valid_option = valid_option_resurrection(characters_playing)
                     character_target = sanitize_inputs(message, valid_option, valid_cast=int)
-                    print("\n")
                     print("****************************************************\n")
                     use_skill(character, enemies_playing, stage, characters_playing, character_target)
                 elif character.__class__.__name__ == "Worker":
@@ -268,7 +267,6 @@ def characters_turn(characters_playing, enemies_playing, stage):
                     message = "Who do you want to heal?: "
                     valid_option = valid_option_healing(characters_playing)
                     character_target = sanitize_inputs(message, valid_option, valid_cast=int)
-                    print("\n")
                     print("****************************************************\n")
                     use_skill(character, enemies_playing, stage, characters_playing, character_target)
             player_number += 1
@@ -277,9 +275,9 @@ def characters_turn(characters_playing, enemies_playing, stage):
 def enemies_turn(enemies_playing, characters_playing):
     targets_alive = []
     index_pop = 0
+    print("------------------------")
+    print("-\tENEMIES TURN\t-")
     print("------------------------\n")
-    print("-\tENEMIES TURN\t-\n")
-    print("------------------------\n\n")
     for enemy in enemies_playing:
         if enemy.get_alive():
             for character in characters_playing:

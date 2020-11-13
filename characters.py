@@ -43,14 +43,14 @@ class Character:
         return "Passive: " + self.passive_skill[1] + "\n"
 
     def __str__(self):
-        return self.get_name() + " -> " + "Stats: " + str(self.max_health) + "HP and " + str(self.dmg) + "DMG\n"
+        return self.get_name() + " -> " + "Stats: " + str(self.max_health) + "HP and " + str(self.dmg) + "DMG"
 
     def set_die(self):
         self.alive = False
 
     def deal_damage(self, enemy, dmg):
         real_dmg = dmg + (self.passive_skill[0] if self.passive_skill[0] > 0 else 0)
-        enemy.takeDamage(real_dmg)
+        enemy.take_damage(real_dmg)
         return real_dmg
 
     def take_damage(self, dmg):
@@ -142,7 +142,7 @@ class Procrastinator(Character):
         return "Procrastinator"
 
     def __str__(self):
-        return self.get_passive_skill() + super().__str__() + '\n\t' + self.get_skill()
+        return super().__str__() + self.get_passive_skill() + '\n\t' + self.get_skill()
 
 
 class Whatsapper(Character):
