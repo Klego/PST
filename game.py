@@ -6,20 +6,24 @@ import sys
 
 
 def game_init_menu(num_players):
-    selected_characters = [num_players]
+    selected_characters = []
     index = 1
     player_index = 1
-    available_characters = [Bookworm(), Worker(), Whatsapper(), Procrastinator()]
+    available_characters = [Bookworm, Worker, Whatsapper, Procrastinator]
     clear_screen()
     print("***********\tAVAILABLE CHARACTERS\t***********")
     for character in available_characters:
-        print(str(index) + ".- " + "The " + str(character))
+        p = character()
+        print(str(index) + ".- " + "The " + str(p))
         index += 1
     print("********************************************************\n")
     while player_index <= num_players:
         option_menu = sanitize_inputs(message="Player " + str(player_index) + ". Please, choose a character(1-4): ",
                                       valid_input=[1, 2, 3, 4], valid_cast=int)
-        selected_characters.append(available_characters[option_menu - 1])
+        player = available_characters[option_menu-1]
+
+        selected_characters.append(player())
+        player_index += 1
     print("********************************************************\n")
     index = 1
     for character in selected_characters:
