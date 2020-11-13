@@ -3,8 +3,8 @@ from random import randint
 
 class Character:
     def __init__(self, health, dmg):
-        self.max_health = health
-        self.health = health
+        self.max_health = int(health)
+        self.health = int(health)
         self.dmg = dmg
         # Skill Id, Explanation, Cooldown count, Cooldown
         self.skill = []
@@ -142,7 +142,7 @@ class Procrastinator(Character):
         return "Procrastinator"
 
     def __str__(self):
-        return super().__str__() + self.get_passive_skill() + '\n\t' + self.get_skill()
+        return super().__str__() + '\n\t' + self.get_passive_skill() + self.get_skill()
 
 
 class Whatsapper(Character):
