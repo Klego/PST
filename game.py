@@ -202,7 +202,7 @@ def enemies_stage(stage):
         else:
             random = randint(0, 3)
         enemy = enemies_available[random]
-        if enemy.__class__.__name__ == "TheoreticalClass":
+        if str(enemy) == "TheoreticalClass":
             enemies_playing.append(enemy(stage))
         else:
             enemies_playing.append(enemy())
