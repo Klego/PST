@@ -97,7 +97,7 @@ class Bookworm(Character):
         return "Bookworm"
 
     def __str__(self):
-        super().__str__() + '\n\t' + self.get_skill()
+        return super().__str__() + '\n\t' + self.get_skill()
 
 
 class Worker(Character):
@@ -109,7 +109,7 @@ class Worker(Character):
         return "Worker"
 
     def __str__(self):
-        super().__str__() + '\n\t' + self.get_skill()
+        return super().__str__() + '\n\t' + self.get_skill()
 
 
 class Procrastinator(Character):
@@ -142,7 +142,7 @@ class Procrastinator(Character):
         return "Procrastinator"
 
     def __str__(self):
-        self.get_passive_skill() + super().__str__() + '\n\t' + self.get_skill()
+        return self.get_passive_skill() + super().__str__() + '\n\t' + self.get_skill()
 
 
 class Whatsapper(Character):
@@ -154,4 +154,4 @@ class Whatsapper(Character):
         return "Whatsapper"
 
     def __str__(self):
-        super().__str__() + '\n\t' + self.get_skill()
+        return super().__str__() + '\n\t' + self.get_skill()
