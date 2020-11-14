@@ -86,37 +86,29 @@ def heal_skill(character_target, character):
 
 
 def all_characters_alive(characters_playing):
+    i = 0
     alive = 0
-    for c in characters_playing:
-        if c.get_alive() == True:
+    while i <= len(characters_playing) - 1:
+        if characters_playing[i].get_alive() == alive:
             alive += 1
+        i += 1
     if alive == len(characters_playing):
-        return True
+        return 1
     else:
-        return False
+        return 0
 
 
 def all_characters_dead(characters_playing):
+    i = 0
     dead = 0
-    for c in characters_playing:
-        if c.get_alive == False:
+    while i <= len(characters_playing) - 1:
+        if characters_playing[i].get_alive() == False:
             dead += 1
-    print(str(dead))
-    print(str(len(characters_playing)))
+        i += 1
     if dead == len(characters_playing):
-        return True
-
-
-def all_enemies_dead(enemies_playing):
-    dead = 0
-    for e in enemies_playing:
-        if e.get_alive == False:
-            dead += 1
-    if dead == len(enemies_playing):
-        print("All enemies have been defeated!\n")
-        return True
+        return 1
     else:
-        return False
+        return 0
 
 
 def who_alive(characters_playing):
@@ -153,7 +145,8 @@ def valid_option_healing(characters_playing):
 
 def use_skill(character, enemies, stage, characters_playing, character_target=None):
     if character.__class__.__name__ == "Bookworm":
-        if not all_characters_alive(characters_playing):
+        all_alive = all_characters_alive(characters_playing)
+        if all_alive == 1:
             resurrection = resurrect_skill(character_target, character)
             if resurrection == 0:
                 print("The player you choose is already alive. The skill won't be used")
@@ -194,16 +187,15 @@ def use_skill(character, enemies, stage, characters_playing, character_target=No
 
 def enemies_stage(stage):
     enemies_playing = []
-    index = 0
     enemies_available = [PartialExam(), TheoreticalClass(stage), Teacher(), FinalExam()]
-    while index < 4:
-        if 1 <= stage < 4:
+    while len(enemies_playing) < 3:
+        if 1 <= stage < 3:
             random = randint(0, 2)
         else:
             random = randint(0, 3)
         enemy = enemies_available[random]
-        enemies_playing.append(enemy)
-        index += 1
+        if enemy not in enemies_playing:
+            enemies_playing.append(enemy)
     return enemies_playing
 
 
@@ -231,8 +223,6 @@ def characters_turn(characters_playing, enemies_playing, stage):
                 if len(enemies_playing) != 0:
                     target = enemies_playing[randint(0, len(enemies_playing) - 1)]
                     real_damage = character.attack(target)
-                    if target.get_alive() == False:
-                        target.set_health = 0
                     print(
                         "The " + character.get_name() + "(Player " + str(player_number) + ") did " + str(real_damage) +
                         " dmg to " + target.get_name() + ". " + target.get_name() + " has " + str(target.get_health()) +
@@ -303,10 +293,11 @@ def enemies_turn(enemies_playing, characters_playing):
 def check_enemies_pop(enemies_playing):
     i = 0
     if len(enemies_playing) != 0:
-        while i <= enemies_playing:
+        while i <= len(enemies_playing)-1:
             if enemies_playing[i].get_alive() == False:
                 enemies_playing.pop(i)
             i += 1
+        return len(enemies_playing)
     else:
         return 0
 
@@ -336,32 +327,34 @@ def reset_cooldown(characters_playing):
 def game():
     try:
         current_stage = 1
-        num_enemies = 1
-        all_dead = False
+        num_enemies = 4
+        all_dead = 0
         characters_playing, stages = game_init()
-        while all_dead == False and current_stage <= stages:
+        while all_dead == 0 and current_stage <= stages:
             enemies_playing = enemies_stage(current_stage)
             print_enemies(current_stage, enemies_playing)
-            while all_dead == False and num_enemies != 0:
+            while all_dead == 0 and len(enemies_playing) != 0:
                 characters_turn(characters_playing, enemies_playing, current_stage)
                 all_dead = all_characters_dead(characters_playing)
-                if all_dead == True:
+                if all_dead == 1:
                     break
                 enemies_turn(enemies_playing, characters_playing)
                 all_dead = all_characters_dead(characters_playing)
                 num_enemies = check_enemies_pop(enemies_playing)
-                if num_enemies == 0 or all_dead == True:
+                if num_enemies == 0 or all_dead == 1:
                     break
                 check_cooldown(characters_playing)
+
             current_stage += 1
-            if all_dead == True:
+            if all_dead == 1:
                 break
             reset_cooldown(characters_playing)
             heal_after_stage(characters_playing)
-        if current_stage > stages:
-            print("All the stages have been cleared. You won the game!")
-        elif all_dead == True:
+
+        if all_dead == 1:
             print("All characters have been defeated. Try again.")
+        elif current_stage > stages:
+            print("All the stages have been cleared. You won the game!")
         sys.exit(0)
     except KeyboardInterrupt:
         print("The user terminated the program. Quitting...\n")
