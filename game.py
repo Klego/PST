@@ -101,12 +101,10 @@ def all_characters_dead(characters_playing):
     for c in characters_playing:
         if c.get_alive == False:
             dead += 1
+    print(str(dead))
+    print(str(len(characters_playing)))
     if dead == len(characters_playing):
         return True
-    else:
-        print(dead)
-        print(len(characters_playing))
-        return False
 
 
 def all_enemies_dead(enemies_playing):
@@ -282,6 +280,7 @@ def characters_turn(characters_playing, enemies_playing, stage):
             player_number += 1
 
 
+
 def enemies_turn(enemies_playing, characters_playing):
     targets_alive = []
     print("------------------------")
@@ -338,22 +337,29 @@ def game():
     try:
         current_stage = 1
         num_enemies = 1
+        all_dead = False
         characters_playing, stages = game_init()
-        while all_characters_dead(characters_playing) == False and current_stage <= stages:
+        while all_dead == False and current_stage <= stages:
             enemies_playing = enemies_stage(current_stage)
             print_enemies(current_stage, enemies_playing)
-            while all_characters_dead(characters_playing) == False and num_enemies != 0:
-                print(all_characters_dead(characters_playing))
+            while all_dead == False and num_enemies != 0:
                 characters_turn(characters_playing, enemies_playing, current_stage)
+                all_dead = all_characters_dead(characters_playing)
+                if all_dead == True:
+                    break
                 enemies_turn(enemies_playing, characters_playing)
                 num_enemies = check_enemies_pop(enemies_playing)
+                if num_enemies == 0:
+                    break
                 check_cooldown(characters_playing)
             current_stage += 1
+            if all_dead == True:
+                break
             reset_cooldown(characters_playing)
             heal_after_stage(characters_playing)
         if current_stage > stages:
             print("All the stages have been cleared. You won the game!")
-        elif all_characters_dead(characters_playing):
+        elif all_dead == True:
             print("All characters have been defeated. Try again.")
         sys.exit(0)
     except KeyboardInterrupt:
