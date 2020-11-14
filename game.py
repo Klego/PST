@@ -151,7 +151,7 @@ def valid_option_healing(characters_playing):
 def use_skill(character, enemies, stage, characters_playing, character_target=None):
     if character.__class__.__name__ == "Bookworm":
         all_alive = all_characters_alive(characters_playing)
-        if all_alive == 1:
+        if all_alive == 0:
             resurrection = resurrect_skill(character_target, character)
             if resurrection == 0:
                 print("The player you choose is already alive. The skill won't be used")
