@@ -348,8 +348,9 @@ def game():
                 if all_dead == True:
                     break
                 enemies_turn(enemies_playing, characters_playing)
+                all_dead = all_characters_dead(characters_playing)
                 num_enemies = check_enemies_pop(enemies_playing)
-                if num_enemies == 0:
+                if num_enemies == 0 or all_dead == True:
                     break
                 check_cooldown(characters_playing)
             current_stage += 1
