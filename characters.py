@@ -45,9 +45,6 @@ class Character:
     def __str__(self):
         return self.get_name() + " -> " + "Stats: " + str(self.max_health) + "HP and " + str(self.dmg) + "DMG"
 
-    def set_die(self):
-        self.alive = False
-
     def deal_damage(self, enemy, dmg):
         real_dmg = dmg + (self.passive_skill[0] if self.passive_skill[0] > 0 else 0)
         enemy.take_damage(real_dmg)
@@ -58,7 +55,7 @@ class Character:
             self.health -= dmg
         else:
             self.health = 0
-            self.set_die()
+            self.alive = False
 
     def damage_roll(self):
         return randint(1, self.dmg)
