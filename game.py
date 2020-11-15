@@ -39,6 +39,7 @@ def game_init():
     characters_playing = game_init_menu(num_players)
     return characters_playing, num_stages
 
+
 # -- Functions for character skills --
 
 
@@ -88,6 +89,7 @@ def heal_skill(character_target, character):
     else:
         return 0
 
+
 # Function that returns if all characters are alive (used in resurrection function)
 def all_characters_alive(characters_playing):
     i = 0
@@ -100,6 +102,7 @@ def all_characters_alive(characters_playing):
         return 1
     else:
         return 0
+
 
 # Function that returns if all characters are dead (used in game function)
 def all_characters_dead(characters_playing):
@@ -114,6 +117,7 @@ def all_characters_dead(characters_playing):
     else:
         return 0
 
+
 # Function used that return a boolean list of characters dead o alive (used in valid_option functions)
 def who_alive(characters_playing):
     alive = []
@@ -123,6 +127,7 @@ def who_alive(characters_playing):
         else:
             alive.append(False)
     return alive
+
 
 # Function that returns the choices available for character resurrection (in characters_turn function)
 def valid_option_resurrection(characters_playing):
@@ -135,6 +140,7 @@ def valid_option_resurrection(characters_playing):
         index_dead += 1
     return valid_option
 
+
 # Function that returns the available choices for character healing (used in chatacter_turn function)
 def valid_option_healing(characters_playing):
     valid_option = []
@@ -145,6 +151,7 @@ def valid_option_healing(characters_playing):
                 valid_option.append(index_heal + 1)
         index_heal += 1
     return valid_option
+
 
 # Function that check skills errors and print message. Also, use the skill of the character if possible.
 # (Used in character_turn function)
@@ -189,6 +196,7 @@ def use_skill(character, enemies, stage, characters_playing, character_target=No
         else:
             print("The " + character_target.get_name() + " has been healed.")
 
+
 # Function that returns the enemies in each stage (Used in enemies_turn function)
 def enemies_stage(stage):
     enemies_playing = []
@@ -203,6 +211,7 @@ def enemies_stage(stage):
             enemies_playing.append(enemy)
     return enemies_playing
 
+
 # Function that prints the enemies (used in enemies_turn function)
 def print_enemies(stage, enemies_playing):
     print("************************")
@@ -213,6 +222,7 @@ def print_enemies(stage, enemies_playing):
     for enemy in enemies_playing:
         print(str(enemy))
     print("++++++++++++++++++++++++++++++++++++++\n")
+
 
 # Function that controls characters playing actions (used in game function)
 def characters_turn(characters_playing, enemies_playing, stage):
@@ -274,6 +284,7 @@ def characters_turn(characters_playing, enemies_playing, stage):
                     use_skill(character, enemies_playing, stage, characters_playing, character_target)
             player_number += 1
 
+
 # Function that controls enemies turn (used in game function)
 def enemies_turn(enemies_playing, characters_playing):
     targets_alive = []
@@ -285,13 +296,15 @@ def enemies_turn(enemies_playing, characters_playing):
             for character in characters_playing:
                 if character.get_alive() == True:
                     targets_alive.append(character)
-                    target = targets_alive[randint(0, len(targets_alive) - 1)]
-                    dmg = enemy.attack(target)
-                    print("The " + enemy.get_name() + " did " + str(dmg) +
-                          " dmg to " + target.get_name() + ". " + target.get_name() + " has " + str(
-                        target.get_health()) + " hp left.")
-                else:
-                    break
+            if len(targets_alive) != 0:
+                target = targets_alive[randint(0, len(targets_alive) - 1)]
+                dmg = enemy.attack(target)
+                print("The " + enemy.get_name() + " did " + str(dmg) +
+                      " dmg to " + target.get_name() + ". " + target.get_name() + " has " + str(
+                    target.get_health()) + " hp left.")
+            else:
+                break
+
 
 # Function that check which enemies are dead an pop from the list (Used in game function)
 def check_enemies_pop(enemies_playing):
@@ -305,6 +318,7 @@ def check_enemies_pop(enemies_playing):
     else:
         return 0
 
+
 # Function that check the cooldowns of every skill in all characters alive. (Used in game function)
 def check_cooldown(characters_playing):
     for character in characters_playing:
@@ -314,11 +328,13 @@ def check_cooldown(characters_playing):
                     character.update_passive_skill()
                 character.update_cooldown()
 
+
 # Function that check if the character is alive at the end of a stage and heals it (Used in game function)
 def heal_after_stage(characters_playing):
     for character in characters_playing:
         if character.get_alive():
             character.heal_after_turn()
+
 
 # Function that reset the characters cooldowns at the end of the stage (used in game function)
 def reset_cooldown(characters_playing):
@@ -327,6 +343,7 @@ def reset_cooldown(characters_playing):
             character.reset_passive_skill()
             character.reset_skill_uses()
         character.reset_cooldown()
+
 
 # Main function of the game that controls the turns and the stages of the game
 def game():
